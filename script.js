@@ -9,16 +9,12 @@ const checkPermission = () => {
   }
 };
 
-const registerSW = async () => {
-  try {
-    const registration = await navigator.serviceWorker.register("./sw.js");
-    return registration;
-  } catch (error) {
-    throw new Error("Service Worker registration failed");
-  }
-};
-
 const requestNotificationPermission = async () => {
+  if (Notification.permission === "granted") {
+    console.log("Notification permission already granted.");
+    return;
+  }
+
   try {
     const permission = await Notification.requestPermission();
     if (permission !== "granted") {
@@ -29,13 +25,26 @@ const requestNotificationPermission = async () => {
   }
 };
 
+const registerSW = async () => {
+  if (navigator.serviceWorker.controller) {
+    console.log("Service Worker already registered.");
+    return;
+  }
+  try {
+    const registration = await navigator.serviceWorker.register("./sw.js");
+    return registration;
+  } catch (error) {
+    throw new Error("Service Worker registration failed");
+  }
+};
+
 const main = async () => {
   try {
     checkPermission();
     await requestNotificationPermission();
     await registerSW();
   } catch (error) {
-    alert(error);
+    throw new Error("main run failed");
   }
 };
 
