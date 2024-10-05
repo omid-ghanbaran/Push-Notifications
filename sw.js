@@ -36,7 +36,6 @@ const saveSubscription = async (subscription) => {
         body: JSON.stringify(subscription),
       }
     );
-    console.log(await response.json());
   } catch (error) {
     throw new Error("Failed to save subscription");
   }
