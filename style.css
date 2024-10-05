@@ -27,7 +27,8 @@ form {
   max-width: 900px;
   min-width: 400px;
   margin: 0 auto;
-  background-color: rgb(13 60 29 / 86%);
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  border-radius: 20px;
   color: rgb(255, 255, 255);
   padding: 60px;
 }
@@ -115,7 +116,10 @@ a {
 section {
   width: 100%;
 }
-
+#res-text {
+  height: 30px;
+  font-weight: 700;
+}
 section .buttons-container {
   display: flex;
   justify-content: space-between;

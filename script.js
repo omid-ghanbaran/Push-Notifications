@@ -1,3 +1,5 @@
+const textBox = document.getElementById("res-text");
+
 const checkPermission = () => {
   if (!("serviceWorker" in navigator)) {
     throw new Error("No support for Service Worker");
@@ -41,24 +43,35 @@ document.getElementById("myForm").addEventListener("submit", function (event) {
   event.preventDefault();
   const formData = new FormData(this);
   const formValues = Object.fromEntries(formData.entries());
-  fetch("http://localhost:5501/api/getMessage", {
+  fetch("http://localhost:5500/api/getMessage", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(formValues),
   })
-    .then((response) => response.text())
+    .then((response) => {
+      if (response.status == 200) {
+        textBox.innerText = "پیام ثبت گردید";
+        setTimeout(() => {
+          textBox.innerText = "";
+        }, 3000);
+      }
+    })
     .catch((error) => console.error("Error:", error));
 });
 
 document.getElementById("notifyButton").addEventListener("click", () => {
-  fetch("http://localhost:5501/api/notifySubscribers", {
+  fetch("http://localhost:5500/api/notifySubscribers", {
     method: "POST",
   })
-    .then((response) => response.text())
-    .then((data) => {
-      alert("پیام با موفقیت ارسال شد");
+    .then((response) => {
+      if (response.status == 200) {
+        textBox.innerText = "پیام ارسال گردید";
+        setTimeout(() => {
+          textBox.innerText = "";
+        }, 3000);
+      }
     })
     .catch((error) => {
       console.error("Error:", error);

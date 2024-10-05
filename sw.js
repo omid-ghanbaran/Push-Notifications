@@ -36,7 +36,7 @@ const saveSubscription = async (subscription) => {
         body: JSON.stringify(subscription),
       }
     );
-    return response.json();
+    console.log(await response.json());
   } catch (error) {
     throw new Error("Failed to save subscription");
   }
@@ -52,7 +52,7 @@ self.addEventListener("activate", async () => {
       // applicationServerKey: publicVapidKey,
       applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
     });
-    const response = await saveSubscription(subscription);
+    const request = await saveSubscription(subscription);
   } catch (error) {
     console.error("Error during activation:", error);
   }
